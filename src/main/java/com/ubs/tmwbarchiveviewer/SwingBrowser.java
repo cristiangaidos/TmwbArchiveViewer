@@ -31,7 +31,7 @@ public class SwingBrowser extends JFrame {
         add(jfxPanel, BorderLayout.CENTER);
 
         // JavaFX components must be initialized on the JavaFX Application Thread
-        Platform.runLater(this::createScene);
+        Platform.runLater(this::createScene); 
     }
 
     private void createScene() {
