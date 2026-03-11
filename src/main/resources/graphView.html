@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="jsplumbtoolkit.css">
+    <link rel="stylesheet" href="graphview.css">
+    
+    <script src="js/graphview.umd.js"></script>
+    <script src="js/graphviewCommunication.js"></script>
+</head>
+<body>
+    <div id="jtk-graphview-flowchart" class="jtk-graphview-main">
+        <div class="jtk-graphview-canvas">
+            <div class="controls">
+                <i class="jtkfa jtkfa-home" id="resetZoom" title="Zoom to Fit"></i>
+            </div>
+            <div class="miniview"></div>
+        </div>
+    </div>
+
+    <script>
+        // Bridge function to receive data from Java
+        function renderGraph(jsonData) {
+            const data = JSON.parse(jsonData);
+            // Initialize the toolkit in Read-Only mode (canEdit = false)
+            window.QPSCoreGraphView.initJsPlumb(false, data);
+        }
+    </script>
+</body>
+</html>
