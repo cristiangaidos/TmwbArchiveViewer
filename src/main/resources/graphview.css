@@ -20,7 +20,7 @@
     Assigned to every Node managed by an instance of the Toolkit. They are required to be positioned absolute, to
     enable dragging to work properly.
 */
-.jtk-node { 
+.jtk-node {
     position: absolute;
 }
 
@@ -1133,40 +1133,40 @@ path {
   content: "✎";
 }
 
-.jtkfa {
+.fa {
   display: flex;
   align-items: center;
   justify-content: center;
   font-style: normal;
 }
 
-.jtkfa-plus:after {
+.fa-plus:after {
   content: "+";
   margin-bottom: 0.2rem;
 }
 
-.jtkfa-home:after {
+.fa-home:after {
   content: "⌂";
   margin-bottom: 0.4rem;
 }
 
-.jtkfa-pencil:after {
+.fa-pencil:after {
   content: "✎";
 }
 
-.jtkfa-arrows:after {
+.fa-arrows:after {
   content: "✥";
 }
 
-.jtkfa-undo:after {
+.fa-undo:after {
   content: "↺";
 }
 
-.jtkfa-repeat:after {
+.fa-repeat:after {
   content: "↻";
 }
 
-.jtkfa-times:after {
+.fa-times:after {
   content: "x";
 }
 
@@ -1190,8 +1190,8 @@ path {
   flex-direction: column;
   margin: 0;
   background-color: #f9f9f9;
-  flex: 0 0 150px;
-  padding: 10px 5px 0 5px;
+  flex: 0 0 250px;
+  padding: 20px 5px 0 5px;
 }
 
 .node-palette {
@@ -1206,8 +1206,7 @@ path {
   color: #585858;
   cursor: move;
   padding: 8px;
-  width: 140px;
-  
+  width: 128px;
   text-align: center;
   margin: 10px;
   outline: none;
@@ -1323,11 +1322,11 @@ path {
 }
 
 .flowchart-action .connect {
-  bottom: 2px;
+  bottom: 18px;
 }
 
 .flowchart-question .connect {
-  bottom: 2px;
+  bottom: 28px;
 }
 
 .flowchart-start .connect {
@@ -1338,8 +1337,8 @@ path {
 }
 
 .connect {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1349,8 +1348,6 @@ path {
 
 .connect:after {
   content: "→";
-  font-size: 13px;
-  bottom: 2px;
 }
 
 .connection-drop svg {
@@ -1404,45 +1401,21 @@ svg.jtk-drag-drop-hover path {
   stroke-dasharray: 0;
 }
 
-.jtkfa-times:after {
+.fa-times:after {
   content: "✖";
 }
 
-.jtkfa-layout:after {
+.fa-layout:after {
   content: "⇌";
 }
 
-.jtkfa-help:after {
+.fa-help:after {
   content: "?";
-}
-
-.jtkfa.jtkfa-pencil:before {
-    content: "";
-}
-
-.jtkfa.jtkfa-arrows:before {
-    content: "";
-}
-
-.jtkfa-home:before {
-    content: "";
-}
-
-.jtkfa-undo:before {
-    content: "";
-}
-
-.jtkfa.jtkfa-repeat:before, .jtkfa.jtkfa-rotate-right:before {
-    content: "";
-}
-
-.jtkfa-times:before {
-    content: "";
 }
 
 /* --------------------- TMWB Node styles ----------------------------------- */
 
-.ui-diagram-element, [jtk-miniview-type|=branch]  {
+.ui-diagram-element {
   width: 14em;
   height: 4em;
   line-height: 4em;
@@ -1453,23 +1426,16 @@ svg.jtk-drag-drop-hover path {
   background-color: #4982de;
   color: #ffffff !important;
   font-weight: bold;
-  
-  float:left;
-  line-height: 24px;
-  vertical-align: center;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  
 }
 
-.ui-diagram-tariff, [jtk-miniview-type|=tariff]  {
+.ui-diagram-tariff {
   background-color: #eaf525;
   color: #000000 !important;
   font-weight: bold;
   border-color: #7ab02c;
 }
 
-.ui-diagram-condition, [jtk-miniview-type|=condition]  {
+.ui-diagram-condition {
   background-color: #c34a2c;
   color: #ffffff !important;
 }
@@ -1480,35 +1446,6 @@ svg.jtk-drag-drop-hover path {
   color: #816a51;
   font-weight: bold;
 }
-
-.ui-panel-rhs-node {
-  width: 8em;
-  height: 4em;
-  line-height: 4em;
-  text-align: center;
-  vertical-align: middle;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-  border-radius: 4px;
-  border: 1px solid transparent;
-  background-color: #4982de;
-  color: #ffffff !important;
-  font-weight: bold;
-  padding: 10px;
-  margin: 10px;	
-}
-
-.ui-panel-rhs-tariff {
-  background-color: #eaf525;
-  color: #000000 !important;
-  font-weight: bold;
-  border-color: #7ab02c;
-}
-
-.ui-panel-rhs-condition {
-  background-color: #c34a2c;
-  color: #ffffff !important;
-}
-
 
 /* --------------------- Help Modal Dialog styles ----------------------------------- */
 
@@ -1569,13 +1506,48 @@ svg.jtk-drag-drop-hover path {
   margin: 3px 0;
 }
 
-.graphview-canvas-dotted {
-  background-size: 5mm 5mm;
-  background-image: radial-gradient(circle, #000000 1px, rgba(0, 0, 0, 0) 1px);
+.node-rule-number, .node-text .node-expression {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px; /* Starting font size */
 }
 
-.tempHide {
-	display: none;
+.node-expression {
+  margin-top: 2px;
+  margin-bottom: 4px;
+  font-weight: bold;
 }
 
-    
+.node-rule-number {
+  margin-bottom: 4px; /* Space between rule number and text */
+}
+
+.node-edit, .node-delete {
+    display: none !important;
+}
+
+.controls i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: #5184a0;
+    color: white;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-style: normal; /* Prevents italics if using emojis */
+}
+
+.controls i.selected-mode {
+    background: #1d9ea0;
+    border: 2px solid #e4f013;
+}
+
+/* Ensure there are NO transitions here */
+.jtk-surface-canvas {
+    transition: none !important; 
+}

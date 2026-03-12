@@ -8,6 +8,7 @@ package com.ubs.tmwbarchiveviewer;
  *
  * @author CristianGaidos
  */
+import com.sun.javafx.webkit.WebConsoleListener;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -26,47 +27,47 @@ public class SwingBrowser extends JFrame {
         setTitle("Swing + JavaScript Integration");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         // Add the JavaFX panel to your Swing layout
         add(jfxPanel, BorderLayout.CENTER);
 
         // JavaFX components must be initialized on the JavaFX Application Thread
-        Platform.runLater(this::createScene); 
+        Platform.runLater(this::createScene);
     }
 
     private void createScene() {
         WebView webView = new WebView();
-        WebEngine webEngine = webView.getEngine();
+        WebEngine engine = webView.getEngine(); // Use one consistent variable name
 
-        // Sample HTML with JavaScript
-        String html = "<html>" +
-                      "<body style='background: #f0f0f0; font-family: sans-serif; text-align: center;'>" +
-                      "<h1>JavaFX WebView in Swing</h1>" +
-                      "<button onclick='showAlert()'>Click Me for JS Alert</button>" +
-                      "<script>" +
-                      "  function showAlert() { alert('Hello from JavaScript inside Swing!'); }" +
-                      "</script>" +
-                      "</body>" +
-                      "</html>";
-
-        webEngine.loadContent(html);
-        
-        WebEngine engine = webView.getEngine();
+        // 1. Only load the actual file you need
         engine.load(getClass().getResource("/graphView.html").toExternalForm());
+        
+        WebConsoleListener.setDefaultListener(new WebConsoleListener() {
+            @Override
+            public void messageAdded(WebView webView, String message, int lineNumber, String sourceId) {
+                System.out.println("JS CONSOLE: [" + sourceId + ":" + lineNumber + "] " + message);
+            }
+        });
+        
+        // 2. Set up the listener BEFORE or right after loading
+        engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
 
-         engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-    if (newState == Worker.State.SUCCEEDED) {
-        // 1. Get your graph JSON from a local file or database
-        String jsonGraphData = "{ \"nodes\": [{ \"type:\"condition\",\"longDescription\":\"\",\"dimensionname\":\"safekeepingAccMain\",\"id\":\"e7d9875e-464a-4149-bf34-4ee2cba30d5f\",\"text\":\"Account Main\",\"h\":110,\"w\":180} ] }";
-        
-        // 2. Inject it into the JS function we defined in step 1
-        engine.executeScript("renderGraph('" + jsonGraphData + "')");
-    }
-});
-        
-        
-        
-        // Set the JavaFX Scene into the JFXPanel
+                // Your fixed JSON string
+                String jsonGraphData = "{\"nodes\":[{\"type\":\"condition\",\"longDescription\":\"\",\"dimensionname\":\"safekeepingAccMain\",\"id\":\"e7d9875e-464a-4149-bf34-4ee2cba30d5f\",\"text\":\"Account Main\",\"h\":110,\"w\":180}]}";
+                String safeJson = jsonGraphData.replace("\\", "\\\\").replace("\"", "\\\"");
+                
+                try {
+                    // 3. Call the function defined in graphView.html
+                    engine.executeScript("renderGraph('" + safeJson + "')");
+                } catch (Exception e) {
+                    System.err.println("JS Execution failed: " + e.getMessage());
+                }
+            } else if (newState == Worker.State.FAILED) {
+                System.err.println("Failed to load graphView.html. Check the file path!");
+            }
+        });
+
         jfxPanel.setScene(new Scene(webView));
     }
 
